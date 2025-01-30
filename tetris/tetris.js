@@ -233,14 +233,14 @@ function move(value) {
     }
   }
   // Hard drop (space)
-  if (value === "space") {
+  if (value === "drop") {
     let gap = 19;
     newLastItem.schema.forEach(coord => {
       const [y, x] = coord.match(/\d+/g).map(Number);
-      for (let spaceY = y + 1; spaceY <= 19; spaceY++) {
-        const spaceCell = document.getElementById(`mainScreen-y${spaceY}-x${x}`);
-        if (spaceCell && spaceCell.classList.length > 0) {
-          gap = Math.min(gap, spaceY - y - 1);
+      for (let dropY = y + 1; dropY <= 19; dropY++) {
+        const dropCell = document.getElementById(`mainScreen-y${dropY}-x${x}`);
+        if (dropCell && dropCell.classList.length > 0) {
+          gap = Math.min(gap, dropY - y - 1);
           break;
         }
       }
@@ -307,7 +307,7 @@ function action(value) { move(value); }
 document.addEventListener("keydown", (event) => {
   if (!isMovable) return;
   switch (event.keyCode) {  
-    case 32: move("space"); break; // space
+    case 32: move("drop"); break; // space
     case 37: move("left"); break; // left
     case 38: move("up"); break; // up
     case 39: move("right"); break; // right
