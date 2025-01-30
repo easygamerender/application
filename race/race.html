@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>race</title>
+    <link rel="icon" href="" type="image/x-icon">
+    <link rel="stylesheet" href="race.css">
+    <link rel="stylesheet" href="../colorExtend.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="race.js"></script>
+  </head>
+  <body class="text-center bg-secondary-dark">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand text-info fw-bold" href="../index.html">
+          <img 
+            src="../img/logo.png" 
+            width="25px" 
+            height="20px" 
+            style="margin-top:-5px;"
+            class="me-1"
+          >
+          EasyGame
+        </a>
+        <button 
+          class="navbar-toggler" 
+          type="button" 
+          data-bs-toggle="collapse" 
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" 
+          aria-expanded="false" 
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="#">About</a>
+            <a class="nav-link" href="#">Contact</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Main Content -->
+    <main class="d-flex flex-column align-items-center justify-content-center m-0 mx-2">
+      <div class="d-flex align-items-center p-0 m-0">
+        <h1 class="text-info fw-bold m-0 my-1">Race </h1>
+      </div>
+      <!-- Score -->
+      <div class="d-flex justify-content-center align-items-end m-0 mb-2 gap-3">
+        <div class="h3 fw-bold text-info m-0">
+          <i class="bi bi-flag-fill"></i> 
+          <span id="showScore"></span> m
+        </div>
+        <div class="h3 fw-bold text-danger-light m-0">
+          <i class="bi bi-heart-fill"></i>
+          <span id="showLifeScore" class="text-danger-light"></span>
+        </div>
+        <div class="h3 fw-bold text-warning m-0">
+          <i class="bi bi-trophy"></i>
+          <span id="showTopScore"></span> m
+        </div>
+      </div>
+      <!-- container -->
+        <!-- Screen -->
+        <div id="container" class="d-flex mb-2 position-relative" > 
+          <div class="items"></div>
+          <div class="sidewalk bg-success rounded-start-3"></div>
+          <div class="bg-info-dark"  style="width: 90px"></div> <!-- road 1  -->
+          <div class="roadLines bg-info-dark road"></div>        
+          <div class="bg-info-dark"  style="width: 90px"></div> <!-- road 2  -->    
+          <div class="roadLines bg-info-dark"></div>        
+          <div class="bg-info-dark "  style="width: 90px"></div> <!-- road 3  -->     
+          <div class="sidewalk bg-success rounded-end-3"></div>
+          <div id="car1" class="position-absolute bottom-0 mb-">
+            <img id="imgCar1" src="../img/car1.png" alt="Car">
+          </div>
+          <!-- retry an start -->
+          <div class="d-flex top-50 start-50 translate-middle position-absolute">
+            <button 
+              id="retry" 
+              onclick="retryFx()" 
+              class="d-none btn bg-info-light fs-3 fw-light px-3 p-0 shadow" 
+            > 
+              <i class="bi bi-controller"></i> Retry 
+            </button>
+            <button 
+              id="start" 
+              onclick="toggleGame()" 
+              class="btn bg-info-light fs-3 fw-light px-3 p-0 shadow" 
+            > 
+              <i class="bi bi-controller"></i> Start 
+            </button>
+          </div>
+          <!-- pause-->
+          <div class="bottom-0 position-absolute">
+            <button 
+              id="pause" 
+              onclick="pauseGame()" 
+              class="d-none btn btn-warning fw-light  m-2 opacity-75"
+              > 
+              <i class="bi bi-pause "></i>
+            </button>
+          </div>
+          <!-- direction -->
+          <div 
+            id="showDirections"
+            class="d-none d-flex bottom-0 start-50 translate-middle-x position-absolute gap-5 mb-2"
+          >
+            <button onclick="turnOn('left')" class="btn bg-info-light opacity-75">
+              <i class="bi bi-arrow-left-short"></i>
+            </button>
+            <button onclick="turnOn('right')" class="btn bg-info-light opacity-75">
+              <i class="bi bi-arrow-right-short"></i>
+            </button>
+          </div>
+        </div>
+      <!-- container : end -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="container-fluid position-fixed bottom-0  p-0">
+      <div class="bg-dark text-light container-fluid text-center p-2">
+        <p class="mb-0">&copy; 2024 <strong>EasyGame</strong> Tous droits réservés.</p>
+      </div>
+    </footer>
+    
+    <!-- GameOver Modal -->
+    <div class="modal" id="gameOverModal" tabindex="-1">
+      <div class="modal-dialog d-flex justify-content-center align-items-center min-vh-100 my-0">
+        <div class="modal-content bg-transparent border-0 gap-2">
+          <div class="d-flex justify-content-center align-items-center gap-2">
+            <p class=" text-info-light"> <span class="display-1">Game Over</span></p>
+            <button class="btn" data-bs-dismiss="modal">
+              <i class="bi bi-x-lg h1 text-secondary"></i>
+            </button>
+          </div>
+          <p class="text-info h1 fw-light text-center mb-4 m-0"> 
+            <i class="bi bi-flag-fill"></i> Score : 
+            <spam class="text-light"><spam id="endScore"></spam> m</spam> 
+          </p>
+          <p id="topScoreBroken" class="display-1 fw-bold text-center m-0 d-none">
+            <i class="bi bi-trophy text-warning"></i> 
+            <span class="bg-warning h5 px-2 pb-1 rounded">Top score </span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
